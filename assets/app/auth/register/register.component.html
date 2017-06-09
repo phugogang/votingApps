@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h1 class='text-center'>Register:</h1>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" formControlName="username" id="username" class="form-control">
+                <span *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">Please enter a valid username.</span>
+            </div>
+
+            <div class="form-group">
+                <label for='email'>Email:</label>
+                <input type='text' formControlName='email' id='email' class="form-control">
+                <span *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">Please enter a valid Email.</span>
+
+            </div>
+
+            <div class="form-group">
+                <label for='password1'>Password:</label>
+                <input type='password' formControlName='password' id='password1' class="form-control">
+                <span *ngIf="!signupForm.get('password').valid && signupForm.get('password').touched">Please enter a valid Email.</span>
+
+            </div>
+
+            <div class="form-group">
+                <label for='password2'>Confirm Password:</label>
+                <input type='password' formControlName='confirmPassword' id='password2' class="form-control">
+                <span *ngIf="(signupForm.get('confirmPassword').invalid || signupForm.get('password').invalid) && !signupForm.get('password').pristine">Password Not Match.</span>
+            </div>
+
+            <div class="form-group text-center">
+                <button type='submit' class='btn btn-primary btn-block' [disabled]="!signupForm.valid">Sign Up.</button>
+            </div>
+        </form>
+    </div>
+</div>

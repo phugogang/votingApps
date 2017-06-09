@@ -1,0 +1,119 @@
+<div class="row">
+    <div class='loading-bar' *ngIf='!result'>
+        <div class='loading-bar-element' *ngIf='progress != "finish"'>
+        </div>
+    </div>
+
+    <div class="container" *ngIf='result'>
+        <div class='row'>
+            <div class="col-md-8 col-md-offset-2">
+
+
+                <div *ngIf='show_chart' @itemState>
+                    <h1 [innerText]="result?.question" class='text-primary text-center'></h1>
+                    <div *ngFor='let data of result?.choices'>
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <span>{{ data.text }}</span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': data.ips.length +'%'}">
+                                        <span class="text-danger">{{ data.ips.length }}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class='col-md-3'>
+                                <br />
+                                <span class="text-danger">{{ data.ips.length }}</span>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+                <div *ngIf='!show_chart'>
+                    <div @itemStateTop>
+                        <h2>Question:</h2>
+                        <h1 [innerText]="result?.question" class='text-primary text-center'></h1>
+                        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+                            <h3>Your answer:</h3>
+                            <div class="list-group">
+                                <div class="form-group">
+                                    <a class="list-group-item" *ngFor="let choice of result?.choices; let i = index">
+                            <input type="radio" name="choose" value="{{choice._id}}" ngModel>{{ choice.text }}
+                        </a>
+                                </div>
+                            </div>
+                            <div *ngIf="is_submitted" class='text-center'>
+                                <p class="bg-danger text-center text-primary">You was Submitted!</p>
+                                                            <button type='submit' [disabled]='is_submitted' class='btn btn-primary btn-lg'>Submit</button>
+
+                            </div>
+                                                            <button class='btn btn-success btn-md' (click)='showBarChar()'>SHOW BAR</button>
+
+                            <button *ngIf="_appService.isAuthenticated()" (click)="onEdit()" class='btn btn-warning pull-right'>Edit</button>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+
+
+                <div @itemState>
+                    <div class="share-buttons ng-scope pull-right">
+                        <a href="https://twitter.com/intent/tweet?url={{ origin_url }};text={{ result?.question }}"
+                            class="btn btn-info btn-sm" target='_blank'>
+                            <i class="fa fa-twitter"></i> Share on Twitter
+                        </a>
+                    </div>
+
+
+
+                    <br><br>
+
+                    <h4 class='text-left'><i>Comment:</i></h4>
+                    <p *ngIf="!_appService.isAuthenticated()" class='text-center pull-right'><i>Please <a [routerLink]="['/auth', 'login']">Login</a> to Comment!</i></p>
+                    <br />
+                    <div *ngIf="_appService.isAuthenticated()">
+                        <form (ngSubmit)="addComment(m)" #m="ngForm">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <input type='text' class='form-control' ngModel name='comment' placeholder="Enter your comment." required #comment="ngModel">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type='submit' class='btn btn-primary btn-block' [disabled]='!comment.valid'>Create</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div *ngFor='let comment of comments; let i = index' @itemStateRight (@itemStateRight.done)='onCommentAnimation($event, i)'>
+                    <div class='well' *ngIf='comment'>
+                        <p class=''>{{ comment.text}}</p>
+                        <p class='pull-right'><i>By: {{ comment.author.username }}</i></p>
+                        <br>
+                        <!--<div *ngIf='comment.author._id == user_Id'>
+                            <div [class.hidden]='true'>
+                                <button class='btn btn-primary btn-sm'>Update</button>
+                                <button class='btn btn-default btn-sm'>Cancel</button>
+                            </div>
+                            <hr />-->
+                        <!--<div>
+                                <button class='btn btn-warning btn-sm'>Edit</button>
+                                <button class='btn btn-danger btn-sm pull-right' (click)='onDeleteComment(comment, i)'>Delete</button>
+                            </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

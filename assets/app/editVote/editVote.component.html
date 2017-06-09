@@ -1,0 +1,48 @@
+<div class="container">
+  <h1 class="text-center">Update Pools</h1>
+  <div *ngIf="myForm">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h2>Your question:</h2>
+          <div class="form-group">
+            <label for="question" hidden="true">Question:</label>
+            <textarea class="form-control" rows="3" id="question" formControlName="question"></textarea>
+          </div>
+
+
+          <div formArrayName="choices">
+            <h3>Choices:</h3>
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                <div class="form-group" *ngFor="let choice of myForm.controls['choices'].controls; let i = index">
+
+                  <label for="{{i}}">Option: {{i}}</label>
+                  <input type="text" [formControlName]="i" class="form-control" id="{{i}}">
+                </div>
+                <div class="form-group text-right">
+                  <button type="button" (click)="onAddChoice()" class="btn btn-primary">Add choice</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+ <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <br />
+          <div class="form-group">
+            <button type="submit" [disabled]="!myForm.valid || !form_is_edit" class="btn btn-success btn-block text-center">Update</button>
+          </div>
+        </div>
+      </div>
+
+
+
+        </div>
+      </div>
+
+    
+    </form>
+  </div>
+</div>

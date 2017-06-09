@@ -1,0 +1,70 @@
+body {
+
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+h1, h2, h3, h4, h5, p, span {
+  overflow-wrap:break-word;
+}
+
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+
+
+
+a {
+  color: #00B7FF;
+  cursor: pointer;
+}
+
+a:hover,
+a:active {
+  color: #00B7FF;
+  text-decoration: underline;
+}
+
+a.danger {
+  color: red;
+}
+
+.spacing {
+  margin-bottom: 20px;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+textarea.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+
+
+.loading-bar {
+  margin: auto;
+  width: 200px;
+  height: 20px;
+  border: 1px solid black;
+  box-sizing: content-box;
+
+}
+
+.loading-bar-element {
+  width: 0;
+  height: 20px;
+  background-color: cornflowerblue;
+  animation: loading 600ms ease infinite;
+}
+
+@keyframes loading {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+

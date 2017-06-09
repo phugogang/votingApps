@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <h1 class='text-center'>New Poll:</h1>
+      <div class="form-group">
+        <label for="question">Name your poll:</label>
+        <textarea rows='4' type="text" class="form-control" id="question" formControlName="question" placeholder='What is your favorite brand.'>
+        </textarea>
+        <span *ngIf='myForm.get("question").invalid && myForm.get("question").touched'>Please type name Pool.</span>
+      </div>
+
+
+      <div class="row">
+        <h4><strong>Options:</strong></h4>
+        <div class="col-md-10 col-md-offset-1">
+          <div formArrayName="choices">
+            
+            <div *ngFor="let choice of myForm.get('choices')['controls']; let i = index">
+              <div class='form-group'>
+                <label for='i'>Option: {{ i }}</label>
+                <input type="text" class='form-control' formControlName="{{ i }}" id='{{ i }}' placeholder='Please type Option.'>
+                <span *ngIf='!myForm.get("choices").get(i).valid && myForm.get("choices").get(i).touched'>Please type your option. {{ i }}</span>
+              </div>
+            </div>
+          </div>
+          <button type="button" (click)="onAddChoice()" class='btn btn-primary'>Add Option</button>
+          <button type="submit" [disabled]='!myForm.valid' class="btn btn-success text-center pull-right">Create</button>
+
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
